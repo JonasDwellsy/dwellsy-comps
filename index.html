@@ -658,7 +658,12 @@ async function runSearch() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 min timeout
 
-    const resp = await fetch('https://comps-api.dwellsy.com/comps', {
+    const isGitHubPages = location.hostname.endsWith('github.io');
+    const apiUrl = isGitHubPages
+      ? 'https://dwellsy-comps-proxy.jonas-4dd.workers.dev/'
+      : 'https://comps-api.dwellsy.com/comps';
+
+    const resp = await fetch(apiUrl, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',
