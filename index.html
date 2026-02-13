@@ -658,9 +658,12 @@ async function runSearch() {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 120000); // 2 min timeout
 
-    const resp = await fetch('/api/comps', {
+    const resp = await fetch('https://comps-api.dwellsy.com/comps', {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization': 'Bearer ' + apiKey
+      },
       body: JSON.stringify(body),
       signal: controller.signal
     });
