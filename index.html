@@ -749,16 +749,22 @@ async function downloadCSV() {
       throw new Error(errMsg || `HTTP ${resp.status}`);
     }
 
-    const csv = await resp.text();
+    const data = await resp.json();
+    if (!data.url) throw new Error('No CSV URL returned by API');
+
+    const csvResp = await fetch(data.url);
+    if (!csvResp.ok) throw new Error(`Failed to download CSV: HTTP ${csvResp.status}`);
+
+    const csv = await csvResp.text();
     const blob = new Blob([csv], { type: 'text/csv' });
-    const url = URL.createObjectURL(blob);
+    const blobUrl = URL.createObjectURL(blob);
     const a = document.createElement('a');
-    a.href = url;
+    a.href = blobUrl;
     a.download = 'dwellsy-comps.csv';
     document.body.appendChild(a);
     a.click();
     a.remove();
-    URL.revokeObjectURL(url);
+    URL.revokeObjectURL(blobUrl);
   } catch (e) {
     showToast(`CSV download failed: ${e.message}`);
   }
