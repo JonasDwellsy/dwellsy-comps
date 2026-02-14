@@ -492,16 +492,6 @@
       </div>
       <div class="form-row" style="margin-bottom:8px">
         <div class="form-group">
-          <label for="sqftMin">Sq Ft Min</label>
-          <input type="number" id="sqftMin" placeholder="Optional">
-        </div>
-        <div class="form-group">
-          <label for="sqftMax">Sq Ft Max</label>
-          <input type="number" id="sqftMax" placeholder="Optional">
-        </div>
-      </div>
-      <div class="form-row" style="margin-bottom:8px">
-        <div class="form-group">
           <label for="radius">Radius (miles)</label>
           <input type="number" id="radius" min="1" max="50" value="2">
         </div>
@@ -638,11 +628,6 @@ async function runSearch() {
     body.latitude = lat;
     body.longitude = lng;
   }
-
-  const sqftMin = parseInt(document.getElementById('sqftMin').value);
-  const sqftMax = parseInt(document.getElementById('sqftMax').value);
-  if (!isNaN(sqftMin)) body.square_feet_min = sqftMin;
-  if (!isNaN(sqftMax)) body.square_feet_max = sqftMax;
 
   const types = [...document.querySelectorAll('.checkbox-group input:checked')].map(c => c.value);
   if (types.length > 0 && types.length < 3) body.address_type = types;
