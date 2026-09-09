@@ -564,7 +564,7 @@
     <div id="sidebarResults" class="hidden">
       <div class="section-title">Results Summary</div>
       <div id="resultsSummary"></div>
-      <button class="btn-secondary" onclick="downloadCSV()">⬇ Download CSV</button>
+      <button class="btn-secondary" onclick="downloadCSV()">&#x2B07; Download CSV</button>
     </div>
   </aside>
 
@@ -600,9 +600,12 @@ let map, markersLayer, compsData = [], charts = {};
 // ── Init Map ──
 function initMap() {
   map = L.map('map', { zoomControl: true }).setView([39.8283, -98.5795], 4);
-  L.tileLayer('https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png', {
-    attribution: '&copy; <a href="https://carto.com/">CARTO</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
-    maxZoom: 19
+  const MAPBOX_MAP_TOKEN = 'pk.eyJ1IjoiamJvcmRvIiwiYSI6ImNtbHI2ajRxNjA4aDEzZXByNnkzaXNvcmwifQ.1gNXtshlQu2ORL4AE0KegA';
+  L.tileLayer('https://api.mapbox.com/styles/v1/mapbox/dark-v11/tiles/{z}/{x}/{y}?access_token=' + MAPBOX_MAP_TOKEN, {
+    attribution: '&copy; <a href="https://www.mapbox.com/">Mapbox</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+    maxZoom: 19,
+    tileSize: 512,
+    zoomOffset: -1
   }).addTo(map);
   markersLayer = L.featureGroup().addTo(map);
 }
